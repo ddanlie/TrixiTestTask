@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+IMAGE_NAME="trixi_test_task"
+CONTAINER_NAME="trixi_test_task_app"
+
+echo "===> Cleaning up old containers..."
+docker rm -f $CONTAINER_NAME 2>/dev/null || true
+
+echo "===> Building Docker image: $IMAGE_NAME..."
+docker build -t $IMAGE_NAME .
+
+echo "===> Running Docker container..."
+docker run --name $CONTAINER_NAME --rm -p 8080:8080 $IMAGE_NAME
